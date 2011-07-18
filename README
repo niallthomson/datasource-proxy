@@ -6,5 +6,13 @@ information about database related shenanigans for various purposes.
 My interests lie in profiling the database queries using Spring AOP (see this project[TODO]), 
 for which I had to extend the existing functionality so I could hook in properly using aspects.
 
-I'm currently re-working how the library works, but basing all my work off the current implementation.
-I expect to commit in a couple of weeks.
+My current goals are:
+
+- Refactor some of the existing code the reduce code duplication
+- Make the existing functionality (listeners, filters, interceptors etc.) more configurable
+
+
+My possible future goals are:
+
+- Explore the use of different methods for proxying (simple objects, AOP etc.)
+- Performance testing
