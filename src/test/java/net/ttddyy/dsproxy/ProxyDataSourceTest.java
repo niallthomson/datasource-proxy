@@ -1,6 +1,8 @@
 package net.ttddyy.dsproxy;
 
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
 import net.ttddyy.dsproxy.support.ProxyDataSource;
+
 import org.hsqldb.jdbc.jdbcDataSource;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterMethod;
@@ -33,6 +35,7 @@ public class ProxyDataSourceTest {
         proxyDataSource = new ProxyDataSource();
         proxyDataSource.setDataSource(dataSource);
         proxyDataSource.setListener(listener);
+        proxyDataSource.setProxyFactory(new JdbcDynamicProxyFactory());
     }
 
     @AfterMethod

@@ -1,7 +1,7 @@
 package net.ttddyy.dsproxy.support;
 
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
-import net.ttddyy.dsproxy.proxy.JdbcProxyFactory;
+import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -17,6 +17,8 @@ public class ProxyDataSource implements DataSource {
     private DataSource dataSource;
     private QueryExecutionListener listener;
     private String dataSourceName = "";
+    
+    private IJdbcProxyFactory proxyFactory;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -37,7 +39,7 @@ public class ProxyDataSource implements DataSource {
     }
 
     private Connection getConnectionProxy(Connection conn) {
-        return JdbcProxyFactory.createConnection(conn, listener, dataSourceName);
+        return proxyFactory.createConnection(conn, listener, dataSourceName);
     }
 
     public void setLogWriter(PrintWriter printWriter) throws SQLException {
@@ -71,4 +73,12 @@ public class ProxyDataSource implements DataSource {
     public String getDataSourceName() {
         return dataSourceName;
     }
+
+	public void setProxyFactory(IJdbcProxyFactory proxyFactory) {
+		this.proxyFactory = proxyFactory;
+	}
+
+	public IJdbcProxyFactory getProxyFactory() {
+		return proxyFactory;
+	}
 }

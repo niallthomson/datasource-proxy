@@ -15,9 +15,10 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-import net.ttddyy.dsproxy.proxy.ConnectionInvocationHandler;
-import net.ttddyy.dsproxy.proxy.JdbcProxyFactory;
 import net.ttddyy.dsproxy.proxy.ProxyJdbcObject;
+import net.ttddyy.dsproxy.proxy.dynamic.ConnectionInvocationHandler;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
+
 import org.mockito.ArgumentCaptor;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -45,10 +46,13 @@ public class StatementInvocationHandlerMockTest {
 
     private static final String DS_NAME = "myDS";
 
-    @BeforeMethod
-    private void setup() {
-    }
-
+    private IJdbcProxyFactory proxyFactory;
+	
+	@BeforeMethod
+    public void setup() throws Exception {
+		proxyFactory = new JdbcDynamicProxyFactory();
+	}
+	
     @Test
     public void testExecuteUpdate() throws Exception {
         final String query = "insert into emp (id, name) values (1, 'foo')";
@@ -393,7 +397,7 @@ public class StatementInvocationHandlerMockTest {
     }
 
     private Statement getProxyStatement(Statement statement, QueryExecutionListener listener) {
-        return JdbcProxyFactory.createStatement(statement, listener, DS_NAME);
+        return proxyFactory.createStatement(statement, listener, DS_NAME);
     }
 
     @SuppressWarnings("unchecked")

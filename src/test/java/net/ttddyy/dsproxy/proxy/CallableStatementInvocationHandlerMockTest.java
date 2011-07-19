@@ -4,6 +4,8 @@ import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
 import net.ttddyy.dsproxy.listener.SimpleQueryExecutionListener;
+import net.ttddyy.dsproxy.proxy.dynamic.ConnectionInvocationHandler;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -21,6 +23,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.spy;
 import static org.testng.Assert.assertTrue;
+
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
@@ -51,7 +55,14 @@ import java.lang.reflect.InvocationHandler;
  */
 public class CallableStatementInvocationHandlerMockTest {
     private static final String DS_NAME = "myDS";
-
+    
+    private IJdbcProxyFactory proxyFactory;
+	
+	@BeforeMethod
+    public void setup() throws Exception {
+		proxyFactory = new JdbcDynamicProxyFactory();
+	}
+    
     @Test
     public void testExecuteWithNoParam() throws Exception {
         final String query = "{call procedure_name}";
@@ -608,7 +619,7 @@ public class CallableStatementInvocationHandlerMockTest {
 
     private CallableStatement getProxyStatement(CallableStatement statement, String query,
                                                 QueryExecutionListener listener) {
-        return JdbcProxyFactory.createCallableStatement(statement, query, listener, DS_NAME);
+        return proxyFactory.createCallableStatement(statement, query, listener, DS_NAME);
     }
 
     @Test

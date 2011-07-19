@@ -4,6 +4,8 @@ import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
 import net.ttddyy.dsproxy.listener.SimpleQueryExecutionListener;
+import net.ttddyy.dsproxy.proxy.dynamic.ConnectionInvocationHandler;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -20,6 +22,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertTrue;
 
@@ -47,6 +51,12 @@ import java.lang.reflect.InvocationHandler;
 public class PreparedStatementInvocationHandlerMockTest {
 
     private static final String DS_NAME = "myDS";
+    private IJdbcProxyFactory proxyFactory;
+	
+	@BeforeMethod
+    public void setup() throws Exception {
+		proxyFactory = new JdbcDynamicProxyFactory();
+	}
 
     @Test
     public void testExecuteQuery() throws Exception {
@@ -133,7 +143,7 @@ public class PreparedStatementInvocationHandlerMockTest {
     }
 
     private PreparedStatement getProxyStatement(PreparedStatement statement, String query, QueryExecutionListener listener) {
-        return JdbcProxyFactory.createPreparedStatement(statement, query, listener, DS_NAME);
+        return proxyFactory.createPreparedStatement(statement, query, listener, DS_NAME);
     }
 
     @SuppressWarnings("unchecked")

@@ -12,10 +12,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertTrue;
 
-import net.ttddyy.dsproxy.proxy.JdbcProxyFactory;
-import net.ttddyy.dsproxy.proxy.PreparedStatementInvocationHandler;
 import net.ttddyy.dsproxy.proxy.ProxyJdbcObject;
-import net.ttddyy.dsproxy.proxy.StatementInvocationHandler;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
+import net.ttddyy.dsproxy.proxy.dynamic.PreparedStatementInvocationHandler;
+import net.ttddyy.dsproxy.proxy.dynamic.StatementInvocationHandler;
+
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.InvocationHandler;
@@ -29,6 +31,13 @@ import java.sql.Statement;
  * @author Tadaya Tsuyukubo
  */
 public class ConnectionInvocationHandlerMockTest {
+	
+	private IJdbcProxyFactory proxyFactory;
+	
+	@BeforeMethod
+    public void setup() throws Exception {
+		proxyFactory = new JdbcDynamicProxyFactory();
+	}
 
     @Test
     public void testCreateStatementWithNoParam() throws Throwable {
@@ -71,7 +80,7 @@ public class ConnectionInvocationHandlerMockTest {
 
     private Connection getProxyConnection(Connection mockConnection) {
         QueryExecutionListener listener = mock(QueryExecutionListener.class);
-        return JdbcProxyFactory.createConnection(mockConnection, listener, "myDS");
+        return proxyFactory.createConnection(mockConnection, listener, "myDS");
     }
 
     private void verifyStatement(Statement statement) {

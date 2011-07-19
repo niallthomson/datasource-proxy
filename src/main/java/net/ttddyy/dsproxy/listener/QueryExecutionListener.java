@@ -11,9 +11,9 @@ import java.util.List;
  *
  * @author Tadaya Tsuyukubo
  * @see ChainListener
- * @see net.ttddyy.dsproxy.proxy.ConnectionInvocationHandler
- * @see net.ttddyy.dsproxy.proxy.PreparedStatementInvocationHandler
- * @see net.ttddyy.dsproxy.proxy.StatementInvocationHandler
+ * @see net.ttddyy.dsproxy.proxy.dynamic.ConnectionInvocationHandler
+ * @see net.ttddyy.dsproxy.proxy.dynamic.PreparedStatementInvocationHandler
+ * @see net.ttddyy.dsproxy.proxy.dynamic.StatementInvocationHandler
  */
 public interface QueryExecutionListener {
 

@@ -11,9 +11,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertTrue;
 
-import net.ttddyy.dsproxy.proxy.ConnectionInvocationHandler;
-import net.ttddyy.dsproxy.proxy.JdbcProxyFactory;
 import net.ttddyy.dsproxy.proxy.ProxyJdbcObject;
+import net.ttddyy.dsproxy.proxy.dynamic.ConnectionInvocationHandler;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
+
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.sql.DataSource;
@@ -27,6 +29,13 @@ import java.sql.Connection;
 public class DataSourceInvocationHandlerMockTest {
 
     private static final String DS_NAME = "myDS";
+    
+    private IJdbcProxyFactory proxyFactory;
+	
+	@BeforeMethod
+    public void setup() throws Exception {
+		proxyFactory = new JdbcDynamicProxyFactory();
+	}
 
     @Test
     public void testGetConnection() throws Throwable {
@@ -40,7 +49,7 @@ public class DataSourceInvocationHandlerMockTest {
     }
 
     private DataSource getProxyDataSource(DataSource ds) {
-        return JdbcProxyFactory.createDataSource(ds, null, DS_NAME);
+        return proxyFactory.createDataSource(ds, null, DS_NAME);
     }
 
     private void verifyConnection(Connection conn) {

@@ -1,7 +1,8 @@
 package net.ttddyy.dsproxy;
 
 import net.ttddyy.dsproxy.listener.ChainListener;
-import net.ttddyy.dsproxy.proxy.JdbcProxyFactory;
+import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -26,6 +27,7 @@ public class StatementInvocationHandlerTest {
     private TestListener testListener;
     private LastQueryListener lastQueryListener;
     private Statement statement;
+    private IJdbcProxyFactory proxyFactory;
 
     @BeforeMethod
     public void setup() throws Exception {
@@ -41,8 +43,10 @@ public class StatementInvocationHandlerTest {
 
         Connection connection = jdbcDataSource.getConnection();
         Statement stmt = connection.createStatement();
+        
+        proxyFactory = new JdbcDynamicProxyFactory();
 
-        statement = JdbcProxyFactory.createStatement(stmt, chainListener);
+        statement = proxyFactory.createStatement(stmt, chainListener);
     }
 
     @AfterMethod

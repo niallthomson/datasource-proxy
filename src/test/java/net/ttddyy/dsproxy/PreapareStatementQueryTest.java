@@ -1,7 +1,9 @@
 package net.ttddyy.dsproxy;
 
 import net.ttddyy.dsproxy.listener.ChainListener;
-import net.ttddyy.dsproxy.proxy.JdbcProxyFactory;
+import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
+
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -26,7 +28,7 @@ public class PreapareStatementQueryTest {
     private TestListener testListener;
     private LastQueryListener lastQueryListener;
     private Connection connection;
-
+    private IJdbcProxyFactory proxyFactory;
 
     @BeforeMethod
     public void setup() throws Exception {
@@ -41,9 +43,11 @@ public class PreapareStatementQueryTest {
 
         // real datasource
         jdbcDataSource = TestUtils.getDataSourceWithData();
+        
+        proxyFactory = new JdbcDynamicProxyFactory();
 
         final Connection conn = jdbcDataSource.getConnection();
-        connection = JdbcProxyFactory.createConnection(conn, chainListener);
+        connection = proxyFactory.createConnection(conn, chainListener);
     }
 
     @AfterMethod
