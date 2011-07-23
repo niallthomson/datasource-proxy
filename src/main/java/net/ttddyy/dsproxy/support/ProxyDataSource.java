@@ -2,6 +2,7 @@ package net.ttddyy.dsproxy.support;
 
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -79,6 +80,10 @@ public class ProxyDataSource implements DataSource {
 	}
 
 	public IJdbcProxyFactory getProxyFactory() {
+		if(proxyFactory == null) {
+			proxyFactory = new JdbcDynamicProxyFactory();
+		}
+		
 		return proxyFactory;
 	}
 }

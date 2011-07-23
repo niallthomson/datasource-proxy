@@ -1,7 +1,6 @@
-package net.ttddyy.dsproxy.support;
+package net.ttddyy.dsproxy.support.aop;
 
 import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
-import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -9,11 +8,11 @@ import org.aopalliance.intercept.MethodInvocation;
 import java.sql.Connection;
 
 /**
- * Support injecting proxies by AOP. 
+ * Support injecting proxies through 'AOP Alliance' AOP. 
  *
  * @author Tadaya Tsuyukubo
  */
-public class ProxyConnectionAdvice implements MethodInterceptor {
+public class AOPAllianceProxyConnectionAdvice implements MethodInterceptor {
 	private IJdbcProxyFactory proxyFactory;
 	
     public Object invoke(MethodInvocation invocation) throws Throwable {

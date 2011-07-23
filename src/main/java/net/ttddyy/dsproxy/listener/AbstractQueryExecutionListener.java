@@ -22,6 +22,6 @@ public abstract class AbstractQueryExecutionListener implements QueryExecutionLi
     }
 
     public void afterQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
-    	
+
     }
 }
