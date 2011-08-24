@@ -28,7 +28,7 @@ public class DataSourceQueryCountListenerTest {
 
     @BeforeMethod
     public void setup() {
-        QueryCountHolder.clear();
+        QueryCountHolder.getDefaultInstance().clear();
     }
 
     @DataProvider
@@ -58,7 +58,7 @@ public class DataSourceQueryCountListenerTest {
         DataSourceQueryCountListener listener = new DataSourceQueryCountListener();
         listener.afterQuery(executionInfo, queryInfoList);
 
-        QueryCount queryCount = QueryCountHolder.get("testDS");
+        QueryCount queryCount = QueryCountHolder.getDefaultInstance().get("testDS");
 
         assertThat(queryCount, is(notNullValue()));
         assertThat(queryCount, is(instanceOf(QueryCount.class)));

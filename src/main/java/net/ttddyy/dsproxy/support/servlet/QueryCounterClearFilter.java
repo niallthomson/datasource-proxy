@@ -1,6 +1,8 @@
-package net.ttddyy.dsproxy.support;
+package net.ttddyy.dsproxy.support.servlet;
 
 import net.ttddyy.dsproxy.QueryCountHolder;
+import net.ttddyy.dsproxy.support.QueryCounterClearServletRequestListener;
+import net.ttddyy.dsproxy.support.spring.QueryCounterClearHandlerInterceptor;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,7 +27,7 @@ public class QueryCounterClearFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         chain.doFilter(request, response);
 
-        QueryCountHolder.clear();
+        QueryCountHolder.getDefaultInstance().clear();
     }
 
     public void destroy() {

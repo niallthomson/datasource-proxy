@@ -1,4 +1,4 @@
-package net.ttddyy.dsproxy.support;
+package net.ttddyy.dsproxy.support.spring;
 
 import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
 import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
@@ -10,7 +10,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import net.ttddyy.dsproxy.support.DataSourceProxyNativeJdbcExtractor;
+import net.ttddyy.dsproxy.support.spring.DataSourceProxyNativeJdbcExtractor;
+
 import org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

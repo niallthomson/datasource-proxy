@@ -1,6 +1,8 @@
 package net.ttddyy.dsproxy.support;
 
 import net.ttddyy.dsproxy.QueryCountHolder;
+import net.ttddyy.dsproxy.support.servlet.QueryCounterClearFilter;
+import net.ttddyy.dsproxy.support.spring.QueryCounterClearHandlerInterceptor;
 
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
@@ -19,7 +21,7 @@ public class QueryCounterClearServletRequestListener implements ServletRequestLi
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {
-        QueryCountHolder.clear();
+        QueryCountHolder.getDefaultInstance().clear();
     }
 
 }

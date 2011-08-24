@@ -1,5 +1,6 @@
-package net.ttddyy.dsproxy.support;
+package net.ttddyy.dsproxy.support.spring;
 
+import net.ttddyy.dsproxy.proxy.ProxyDataSource;
 
 import org.springframework.beans.factory.BeanNameAware;
 

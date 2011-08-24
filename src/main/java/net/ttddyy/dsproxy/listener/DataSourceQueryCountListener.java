@@ -26,22 +26,19 @@ import java.util.List;
  * @author Tadaya Tsuyukubo
  * @see net.ttddyy.dsproxy.QueryCount
  * @see net.ttddyy.dsproxy.QueryCountHolder
- * @see net.ttddyy.dsproxy.support.CommonsQueryCountLoggingFilter
+ * @see net.ttddyy.dsproxy.support.servlet.CommonsQueryCountLoggingFilter
  * @see net.ttddyy.dsproxy.support.CommonsQueryCountLoggingRequestListener
  * @see net.ttddyy.dsproxy.support.CommonsQueryCountLoggingHandlerInterceptor
  */
 public class DataSourceQueryCountListener extends AbstractQueryExecutionListener {
 
-    public void beforeQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
-    }
-
     public void afterQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
         final String dataSourceName = execInfo.getDataSourceName();
 
-        QueryCount count = QueryCountHolder.get(dataSourceName);
+        QueryCount count = QueryCountHolder.getDefaultInstance().get(dataSourceName);
         if (count == null) {
             count = new QueryCount();
-            QueryCountHolder.put(dataSourceName, count);
+            QueryCountHolder.getDefaultInstance().put(dataSourceName, count);
         }
 
         // increment db call

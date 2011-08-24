@@ -1,6 +1,9 @@
-package net.ttddyy.dsproxy.support;
+package net.ttddyy.dsproxy.support.spring;
 
 import net.ttddyy.dsproxy.QueryCountHolder;
+import net.ttddyy.dsproxy.support.QueryCounterClearServletRequestListener;
+import net.ttddyy.dsproxy.support.servlet.QueryCounterClearFilter;
+
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +21,7 @@ public class QueryCounterClearHandlerInterceptor extends HandlerInterceptorAdapt
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        QueryCountHolder.clear();
+        QueryCountHolder.getDefaultInstance().clear();
     }
 
 }

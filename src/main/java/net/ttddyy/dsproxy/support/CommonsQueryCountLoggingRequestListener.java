@@ -2,7 +2,9 @@ package net.ttddyy.dsproxy.support;
 
 import net.ttddyy.dsproxy.QueryCount;
 import net.ttddyy.dsproxy.QueryCountHolder;
-import net.ttddyy.dsproxy.listener.CommonsLogLevel;
+import net.ttddyy.dsproxy.support.logging.CommonsLogLevel;
+import net.ttddyy.dsproxy.support.servlet.CommonsQueryCountLoggingFilter;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -38,16 +40,16 @@ public class CommonsQueryCountLoggingRequestListener implements ServletRequestLi
             logLevel = DEFAULT_LOG_LEVEL;
         }
 
-        final List<String> dsNames = QueryCountHolder.getDataSourceNamesAsList();
+        final List<String> dsNames = QueryCountHolder.getDefaultInstance().getDataSourceNamesAsList();
         Collections.sort(dsNames);
 
         for (String dsName : dsNames) {
-            final QueryCount counter = QueryCountHolder.get(dsName);
+            final QueryCount counter = QueryCountHolder.getDefaultInstance().get(dsName);
             final String message = CommonsLogUtils.getCountLogMessage(counter, dsName);
             writeLog(logLevel, message);
         }
 
-        QueryCountHolder.clear();
+        QueryCountHolder.getDefaultInstance().clear();
     }
 
     private void writeLog(CommonsLogLevel logLevel, String message) {

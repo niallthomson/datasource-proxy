@@ -5,7 +5,7 @@ import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.AbstractQueryExecutionListener;
 import net.ttddyy.dsproxy.listener.ChainListener;
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
-import net.ttddyy.dsproxy.support.ProxyDataSource;
+import net.ttddyy.dsproxy.proxy.ProxyDataSource;
 
 import javax.naming.NamingException;
 import javax.naming.Reference;

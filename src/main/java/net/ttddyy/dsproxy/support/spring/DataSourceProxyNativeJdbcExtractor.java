@@ -1,4 +1,4 @@
-package net.ttddyy.dsproxy.support;
+package net.ttddyy.dsproxy.support.spring;
 
 import net.ttddyy.dsproxy.proxy.NativeJdbcExtractUtils;
 import org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor;

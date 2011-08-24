@@ -1,4 +1,4 @@
-package net.ttddyy.dsproxy.listener;
+package net.ttddyy.dsproxy.support.logging;
 
 /**
  * Apache Commons-Logging log level representation. 

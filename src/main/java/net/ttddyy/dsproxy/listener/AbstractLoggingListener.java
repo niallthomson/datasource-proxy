@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
-import net.ttddyy.dsproxy.util.BeanFormatter;
+import net.ttddyy.dsproxy.support.logging.ILogger;
 
 /**
  * Base class for logging listeners.
@@ -13,18 +13,10 @@ import net.ttddyy.dsproxy.util.BeanFormatter;
  * @author Tadaya Tsuyukubo
  */
 public abstract class AbstractLoggingListener extends AbstractQueryExecutionListener {
-	private String messageFormat;
-	
-	public AbstractLoggingListener(String messageFormat) {
-		this.messageFormat = messageFormat;
-	}
+	private ILogger logger;
 
-	public void setMessageFormat(String messageFormat) {
-		this.messageFormat = messageFormat;
-	}
-
-	public String getMessageFormat() {
-		return messageFormat;
+	public void setMessageFormat(String format) {
+		this.logger.setFormat(format);
 	}
 
 	public void afterQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
@@ -54,11 +46,7 @@ public abstract class AbstractLoggingListener extends AbstractQueryExecutionList
 				execInfo.getResult(), execInfo.getElapsedTime(), sb.toString(),
 				queryInfoList.size());
 		
-		try {
-			log(new BeanFormatter<LogMessage>(messageFormat).format(message));
-		} catch (Exception e) {
-			log("Failed to format log message using format "+messageFormat);
-		}
+		logger.log(message);
 	}
 
 	private void chopIfEndWith(StringBuilder sb, char c) {
@@ -67,8 +55,6 @@ public abstract class AbstractLoggingListener extends AbstractQueryExecutionList
 			sb.deleteCharAt(lastCharIndex);
 		}
 	}
-
-	public abstract void log(String message);
 }
 
 /**

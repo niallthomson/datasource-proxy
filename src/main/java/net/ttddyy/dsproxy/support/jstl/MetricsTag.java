@@ -1,4 +1,4 @@
-package net.ttddyy.dsproxy.support.tags;
+package net.ttddyy.dsproxy.support.jstl;
 
 import net.ttddyy.dsproxy.QueryCount;
 import net.ttddyy.dsproxy.QueryCountHolder;
@@ -26,9 +26,9 @@ public class MetricsTag extends SimpleTagSupport {
 
         final QueryCount count;
         if (dataSource == null || "".equals(dataSource)) {
-            count = QueryCountHolder.getGrandTotal();
+            count = QueryCountHolder.getDefaultInstance().getGrandTotal();
         } else {
-            count = QueryCountHolder.get(dataSource);
+            count = QueryCountHolder.getDefaultInstance().get(dataSource);
         }
 
         if (count == null) {

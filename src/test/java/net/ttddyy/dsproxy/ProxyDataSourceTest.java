@@ -1,7 +1,7 @@
 package net.ttddyy.dsproxy;
 
+import net.ttddyy.dsproxy.proxy.ProxyDataSource;
 import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
-import net.ttddyy.dsproxy.support.ProxyDataSource;
 
 import org.hsqldb.jdbc.jdbcDataSource;
 import static org.testng.Assert.assertEquals;

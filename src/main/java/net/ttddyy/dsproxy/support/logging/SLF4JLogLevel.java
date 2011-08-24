@@ -1,4 +1,4 @@
-package net.ttddyy.dsproxy.listener;
+package net.ttddyy.dsproxy.support.logging;
 
 /**
  * SLF4J log level representation.
@@ -14,5 +14,4 @@ public enum SLF4JLogLevel {
         }
         return valueOf(name);
     }
-
 }

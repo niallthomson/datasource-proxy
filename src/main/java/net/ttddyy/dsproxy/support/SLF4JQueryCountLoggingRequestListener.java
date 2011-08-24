@@ -2,7 +2,8 @@ package net.ttddyy.dsproxy.support;
 
 import net.ttddyy.dsproxy.QueryCount;
 import net.ttddyy.dsproxy.QueryCountHolder;
-import net.ttddyy.dsproxy.listener.SLF4JLogLevel;
+import net.ttddyy.dsproxy.support.logging.SLF4JLogLevel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,17 +39,17 @@ public class SLF4JQueryCountLoggingRequestListener implements ServletRequestList
             logLevel = DEFAULT_LOG_LEVEL;
         }
 
-        final List<String> dsNames = QueryCountHolder.getDataSourceNamesAsList();
+        final List<String> dsNames = QueryCountHolder.getDefaultInstance().getDataSourceNamesAsList();
         Collections.sort(dsNames);
 
         for (String dsName : dsNames) {
-            final QueryCount counter = QueryCountHolder.get(dsName);
+            final QueryCount counter = QueryCountHolder.getDefaultInstance().get(dsName);
             final Object[] args = {dsName, counter.getElapsedTime(), counter.getCall(), counter.getTotalNumOfQuery(),
                     counter.getSelect(), counter.getInsert(), counter.getUpdate(), counter.getDelete(), counter.getOther()};
             writeLog(logLevel, args);
         }
 
-        QueryCountHolder.clear();
+        QueryCountHolder.getDefaultInstance().clear();
 
     }
 
