@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy.dynamic;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.ObjectArrayUtils;
 
 import java.sql.Statement;
@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class StatementInvocationHandler extends AbstractStatementInvocationHandler<Statement> {
     public StatementInvocationHandler(
-            Statement stmt, QueryExecutionListener listener, String dataSourceName) {
+            Statement stmt, IQueryExecutionListener listener, String dataSourceName) {
         super(stmt, listener, dataSourceName);
     }
 

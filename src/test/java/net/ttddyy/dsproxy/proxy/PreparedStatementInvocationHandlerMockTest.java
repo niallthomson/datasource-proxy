@@ -2,7 +2,7 @@ package net.ttddyy.dsproxy.proxy;
 
 import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.listener.SimpleQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.dynamic.ConnectionInvocationHandler;
 import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
@@ -63,7 +63,7 @@ public class PreparedStatementInvocationHandlerMockTest {
         final String query = "select * from emp where id = ?";
 
         PreparedStatement stat = mock(PreparedStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
 
@@ -142,12 +142,12 @@ public class PreparedStatementInvocationHandlerMockTest {
                 object, ref, shortValue, stringValue, time, timestamp, url);
     }
 
-    private PreparedStatement getProxyStatement(PreparedStatement statement, String query, QueryExecutionListener listener) {
+    private PreparedStatement getProxyStatement(PreparedStatement statement, String query, IQueryExecutionListener listener) {
         return proxyFactory.createPreparedStatement(statement, query, listener, DS_NAME);
     }
 
     @SuppressWarnings("unchecked")
-    private void verifyListener(QueryExecutionListener listener, String methodName, String query, Object... expectedQueryArgs) {
+    private void verifyListener(IQueryExecutionListener listener, String methodName, String query, Object... expectedQueryArgs) {
         ArgumentCaptor<ExecutionInfo> executionInfoCaptor = ArgumentCaptor.forClass(ExecutionInfo.class);
         ArgumentCaptor<List> queryInfoListCaptor = ArgumentCaptor.forClass(List.class);
 
@@ -185,7 +185,7 @@ public class PreparedStatementInvocationHandlerMockTest {
         PreparedStatement stat = mock(PreparedStatement.class);
         when(stat.executeBatch()).thenReturn(new int[]{1, 1, 1});
 
-        QueryExecutionListener listener = new SimpleQueryExecutionListener();
+        IQueryExecutionListener listener = new SimpleQueryExecutionListener();
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
         statement.setString(1, "foo");
@@ -223,7 +223,7 @@ public class PreparedStatementInvocationHandlerMockTest {
         PreparedStatement stat = mock(PreparedStatement.class);
         when(stat.executeBatch()).thenReturn(new int[]{1});
 
-        QueryExecutionListener listener = new SimpleQueryExecutionListener();
+        IQueryExecutionListener listener = new SimpleQueryExecutionListener();
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
         statement.setString(1, "foo");
@@ -256,7 +256,7 @@ public class PreparedStatementInvocationHandlerMockTest {
         PreparedStatement stat = mock(PreparedStatement.class);
         when(stat.executeBatch()).thenReturn(new int[]{1});
 
-        QueryExecutionListener listener = new SimpleQueryExecutionListener();
+        IQueryExecutionListener listener = new SimpleQueryExecutionListener();
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
         statement.setString(1, "foo");
@@ -288,7 +288,7 @@ public class PreparedStatementInvocationHandlerMockTest {
 
         PreparedStatement stat = mock(PreparedStatement.class);
 
-        QueryExecutionListener listener = mock(QueryExecutionListener.class);
+        IQueryExecutionListener listener = mock(IQueryExecutionListener.class);
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
         statement.setString(1, "foo");

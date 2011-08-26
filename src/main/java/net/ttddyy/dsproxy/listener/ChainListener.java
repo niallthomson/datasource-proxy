@@ -12,29 +12,29 @@ import java.util.List;
  * @author Tadaya Tsuyukubo
  */
 public class ChainListener extends AbstractQueryExecutionListener {
-    private List<QueryExecutionListener> listeners = new ArrayList<QueryExecutionListener>();
+    private List<IQueryExecutionListener> listeners = new ArrayList<IQueryExecutionListener>();
 
     public void beforeQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
-        for (QueryExecutionListener listener : listeners) {
+        for (IQueryExecutionListener listener : listeners) {
             listener.beforeQuery(execInfo, queryInfoList);
         }
     }
 
     public void afterQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
-        for (QueryExecutionListener listener : listeners) {
+        for (IQueryExecutionListener listener : listeners) {
             listener.afterQuery(execInfo, queryInfoList);
         }
     }
 
-    public void addListener(QueryExecutionListener listner) {
+    public void addListener(IQueryExecutionListener listner) {
         this.listeners.add(listner);
     }
 
-    public List<QueryExecutionListener> getListeners() {
+    public List<IQueryExecutionListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<QueryExecutionListener> listeners) {
+    public void setListeners(List<IQueryExecutionListener> listeners) {
         this.listeners = listeners;
     }
 }

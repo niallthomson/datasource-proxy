@@ -13,7 +13,15 @@ public class SLF4JLogger extends AbstractLogger {
 	private Logger logger = LoggerFactory.getLogger(SLF4JLogger.class);
     private SLF4JLogLevel logLevel = SLF4JLogLevel.DEBUG;
 
-    public void setLogLevel(SLF4JLogLevel logLevel) {
+    public SLF4JLogger(String logLevel) {
+		this.setLogLevel(logLevel);
+	}
+    
+    public SLF4JLogger() {
+		// Do nothing
+	}
+
+	public void setLogLevel(SLF4JLogLevel logLevel) {
         this.logLevel = logLevel;
     }
 

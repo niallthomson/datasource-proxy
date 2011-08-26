@@ -1,6 +1,7 @@
 package net.ttddyy.dsproxy.proxy;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
+import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -8,16 +9,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * A proxy of {@link javax.sql.DataSource} with {@link net.ttddyy.dsproxy.listener.QueryExecutionListener}.
+ * A proxy of {@link javax.sql.DataSource} with {@link net.ttddyy.dsproxy.listener.IQueryExecutionListener}.
  *
  * @author Tadaya Tsuyukubo
  */
 public class ProxyDataSource implements DataSource {
     private DataSource dataSource;
-    private QueryExecutionListener listener;
+    private IQueryExecutionListener listener;
     private String dataSourceName = "";
     
-    private IJdbcProxyFactory proxyFactory;
+    private IJdbcProxyFactory proxyFactory = new JdbcDynamicProxyFactory();
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -61,7 +62,7 @@ public class ProxyDataSource implements DataSource {
         return dataSource.isWrapperFor(iface);
     }
 
-    public void setListener(QueryExecutionListener listener) {
+    public void setListener(IQueryExecutionListener listener) {
         this.listener = listener;
     }
 

@@ -7,35 +7,35 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 
 public interface IJdbcProxyFactory {
 
 	public DataSource createDataSource(DataSource dataSource,
-			QueryExecutionListener listener, String dataSourceName);
+			IQueryExecutionListener listener, String dataSourceName);
 
 	public Connection createConnection(Connection connection,
-			QueryExecutionListener listener);
+			IQueryExecutionListener listener);
 
 	public Connection createConnection(Connection connection,
-			QueryExecutionListener listener, String dataSourceName);
+			IQueryExecutionListener listener, String dataSourceName);
 
 	public Statement createStatement(Statement statement,
-			QueryExecutionListener listener);
+			IQueryExecutionListener listener);
 
 	public Statement createStatement(Statement statement,
-			QueryExecutionListener listener, String dataSourceName);
+			IQueryExecutionListener listener, String dataSourceName);
 
 	public PreparedStatement createPreparedStatement(
 			PreparedStatement preparedStatement, String query,
-			QueryExecutionListener listener);
+			IQueryExecutionListener listener);
 
 	public PreparedStatement createPreparedStatement(
 			PreparedStatement preparedStatement, String query,
-			QueryExecutionListener listener, String dataSourceName);
+			IQueryExecutionListener listener, String dataSourceName);
 
 	public CallableStatement createCallableStatement(
 			CallableStatement callableStatement, String query,
-			QueryExecutionListener listener, String dataSourceName);
+			IQueryExecutionListener listener, String dataSourceName);
 
 }

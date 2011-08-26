@@ -11,6 +11,12 @@ public abstract class AbstractQueryCountLogger {
 	private boolean clearQueryCounter;
 	
 	private QueryCountHolder queryCountHolder;
+	
+	private static String DEFAULT_FORMAT = "DataSource:{dsName} ElapsedTime:{elapsedTime} Call:{call} Query:{totalNumOfQuery} (Select:{select} Insert:{insert} Update:{update} Delete:{delete} Other:{other})";
+	
+	public AbstractQueryCountLogger() {
+		this.setFormat(DEFAULT_FORMAT);
+	}
 
 	protected void logQueryCount() {
 		final List<String> dsNames = this.getQueryCountHolder().getDataSourceNamesAsList();
@@ -39,7 +45,17 @@ public abstract class AbstractQueryCountLogger {
 		this.logger = logger;
 	}
 	
-	private QueryCountHolder getQueryCountHolder() {
+	public void setLogLevel(String logLevel) {
+		if(this.logger != null) {
+			this.logger.setLogLevel(logLevel);
+		}
+	}
+	
+	public void setFormat(String format) {
+		this.logger.setFormat(format);
+	}
+	
+	protected QueryCountHolder getQueryCountHolder() {
 		if(this.queryCountHolder == null) {
 			this.queryCountHolder = QueryCountHolder.getDefaultInstance();
 		}
@@ -95,5 +111,9 @@ class QueryCountLogMessage {
 
 	public int getOther() {
 		return this.queryCount.getOther();
+	}
+	
+	public int getFailure() {
+		return this.queryCount.getFailure();
 	}
 }

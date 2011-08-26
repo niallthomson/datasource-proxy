@@ -1,7 +1,6 @@
 package net.ttddyy.dsproxy.support.servlet;
 
 import net.ttddyy.dsproxy.QueryCountHolder;
-import net.ttddyy.dsproxy.support.QueryCounterClearServletRequestListener;
 import net.ttddyy.dsproxy.support.spring.QueryCounterClearHandlerInterceptor;
 
 import javax.servlet.Filter;

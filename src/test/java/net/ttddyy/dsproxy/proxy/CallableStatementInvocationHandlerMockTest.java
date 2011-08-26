@@ -2,7 +2,7 @@ package net.ttddyy.dsproxy.proxy;
 
 import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.listener.SimpleQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.dynamic.ConnectionInvocationHandler;
 import net.ttddyy.dsproxy.proxy.dynamic.JdbcDynamicProxyFactory;
@@ -68,7 +68,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         when(stat.execute()).thenReturn(true);
 
@@ -84,7 +84,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         when(stat.execute()).thenReturn(true);
 
@@ -103,7 +103,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         when(stat.execute()).thenReturn(true);
 
@@ -122,7 +122,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         when(stat.executeUpdate()).thenReturn(100);
 
@@ -138,7 +138,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         when(stat.executeUpdate()).thenReturn(100);
 
@@ -157,7 +157,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         when(stat.executeUpdate()).thenReturn(100);
 
@@ -176,7 +176,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         ResultSet mockResultSet = mock(ResultSet.class);
         when(stat.executeQuery()).thenReturn(mockResultSet);
@@ -193,7 +193,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         ResultSet mockResultSet = mock(ResultSet.class);
         when(stat.executeQuery()).thenReturn(mockResultSet);
@@ -213,7 +213,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_name}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         ResultSet mockResultSet = mock(ResultSet.class);
         when(stat.executeQuery()).thenReturn(mockResultSet);
@@ -233,7 +233,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_a}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         CallableStatement statement = getProxyStatement(stat, query, listener);
 
@@ -260,7 +260,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_a}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
         statement.setString(1, "foo");
@@ -290,7 +290,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_a}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
         statement.setString(1, "foo");
@@ -321,7 +321,7 @@ public class CallableStatementInvocationHandlerMockTest {
         final String query = "{call procedure_a}";
 
         CallableStatement stat = mock(CallableStatement.class);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
 
         PreparedStatement statement = getProxyStatement(stat, query, listener);
         statement.setString(1, "foo");
@@ -537,20 +537,20 @@ public class CallableStatementInvocationHandlerMockTest {
         NO_PARAM, BY_POSITION, BY_NAME
     }
 
-    private void verifyListenerWithNoParam(QueryExecutionListener listener, String methodName, String query) {
+    private void verifyListenerWithNoParam(IQueryExecutionListener listener, String methodName, String query) {
         verifyListener(listener, methodName, query, ParamStatus.NO_PARAM);
     }
 
-    private void verifyListenerWithParamByPosition(QueryExecutionListener listener, String methodName, String query) {
+    private void verifyListenerWithParamByPosition(IQueryExecutionListener listener, String methodName, String query) {
         verifyListener(listener, methodName, query, ParamStatus.BY_POSITION);
     }
 
-    private void verifyListenerWithParamByName(QueryExecutionListener listener, String methodName, String query) {
+    private void verifyListenerWithParamByName(IQueryExecutionListener listener, String methodName, String query) {
         verifyListener(listener, methodName, query, ParamStatus.BY_NAME);
     }
 
     @SuppressWarnings("unchecked")
-    private void verifyListener(QueryExecutionListener listener, String methodName, String query, ParamStatus paramStatus) {
+    private void verifyListener(IQueryExecutionListener listener, String methodName, String query, ParamStatus paramStatus) {
         ArgumentCaptor<ExecutionInfo> executionInfoCaptor = ArgumentCaptor.forClass(ExecutionInfo.class);
         ArgumentCaptor<List> queryInfoListCaptor = ArgumentCaptor.forClass(List.class);
 
@@ -618,7 +618,7 @@ public class CallableStatementInvocationHandlerMockTest {
 
 
     private CallableStatement getProxyStatement(CallableStatement statement, String query,
-                                                QueryExecutionListener listener) {
+                                                IQueryExecutionListener listener) {
         return proxyFactory.createCallableStatement(statement, query, listener, DS_NAME);
     }
 

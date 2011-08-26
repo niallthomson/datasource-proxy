@@ -20,8 +20,26 @@ public class QueryCount {
     private int failure;
 
     private long elapsedTime;
+    
+    public QueryCount() {
+    	// Nothing
+    }
 
-    public void increment(QueryType queryType) {
+    public QueryCount(int select, int insert, int update, int delete,
+			int other, int call, int failure, long elapsedTime) {
+		this.select = select;
+		this.insert = insert;
+		this.update = update;
+		this.delete = delete;
+		this.other = other;
+		this.call = call;
+		this.failure = failure;
+		this.elapsedTime = elapsedTime;
+	}
+
+
+
+	public void increment(QueryType queryType) {
         switch (queryType) {
             case SELECT:
                 incrementSelect();

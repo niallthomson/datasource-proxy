@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -79,7 +79,7 @@ public class ConnectionInvocationHandlerMockTest {
     }
 
     private Connection getProxyConnection(Connection mockConnection) {
-        QueryExecutionListener listener = mock(QueryExecutionListener.class);
+        IQueryExecutionListener listener = mock(IQueryExecutionListener.class);
         return proxyFactory.createConnection(mockConnection, listener, "myDS");
     }
 

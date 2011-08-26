@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
 import org.mockito.ArgumentCaptor;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class MockTestUtils {
     @SuppressWarnings("unchecked")
-    public static void verifyListenerForBatch(QueryExecutionListener listener, String dataSourceName, String query,
+    public static void verifyListenerForBatch(IQueryExecutionListener listener, String dataSourceName, String query,
                                               Object[]... expectedQueryArgs) {
         ArgumentCaptor<ExecutionInfo> executionInfoCaptor = ArgumentCaptor.forClass(ExecutionInfo.class);
         ArgumentCaptor<List> queryInfoListCaptor = ArgumentCaptor.forClass(List.class);

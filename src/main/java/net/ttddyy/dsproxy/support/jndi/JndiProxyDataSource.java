@@ -4,7 +4,7 @@ import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.AbstractQueryExecutionListener;
 import net.ttddyy.dsproxy.listener.ChainListener;
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.ProxyDataSource;
 
 import javax.naming.NamingException;
@@ -26,7 +26,7 @@ public class JndiProxyDataSource extends ProxyDataSource implements Referenceabl
     private static final long serialVersionUID = 5412567340724273513L;
 
     private DataSource parentDataSource;
-    private QueryExecutionListener listener;
+    private IQueryExecutionListener listener;
 
     public JndiProxyDataSource() {
     }
@@ -38,12 +38,12 @@ public class JndiProxyDataSource extends ProxyDataSource implements Referenceabl
         setDataSourceName(name);
     }
 
-    public QueryExecutionListener getListener() {
+    public IQueryExecutionListener getListener() {
         return listener;
     }
 
     @Override
-    public void setListener(QueryExecutionListener listener) {
+    public void setListener(IQueryExecutionListener listener) {
         this.listener = listener instanceof Serializable ? listener : new SerializableListenerAdapter(listener);
         super.setListener(listener);
     }
@@ -68,12 +68,12 @@ public class JndiProxyDataSource extends ProxyDataSource implements Referenceabl
         private static final long serialVersionUID = -5945569344502716192L;
 
         private String[] listenerClasses;
-        private transient QueryExecutionListener listener;
+        private transient IQueryExecutionListener listener;
 
         public SerializableListenerAdapter() {
         }
 
-        public SerializableListenerAdapter(QueryExecutionListener listener) {
+        public SerializableListenerAdapter(IQueryExecutionListener listener) {
             if (listener == null)
                 throw new NullPointerException();
             this.listener = listener;
@@ -81,7 +81,7 @@ public class JndiProxyDataSource extends ProxyDataSource implements Referenceabl
             if (listener instanceof ChainListener) {
                 ChainListener cl = (ChainListener) listener;
                 List<String> classNames = new ArrayList<String>();
-                for (QueryExecutionListener executionListener : cl.getListeners())
+                for (IQueryExecutionListener executionListener : cl.getListeners())
                     classNames.add(executionListener.getClass().getName());
                 listenerClasses = classNames.toArray(new String[classNames.size()]);
             } else
@@ -109,11 +109,11 @@ public class JndiProxyDataSource extends ProxyDataSource implements Referenceabl
         private void createListeners() {
             try {
                 if (listenerClasses.length == 1)
-                    listener = (QueryExecutionListener) Class.forName(listenerClasses[0]).newInstance();
+                    listener = (IQueryExecutionListener) Class.forName(listenerClasses[0]).newInstance();
                 else {
                     ChainListener cl = new ChainListener();
                     for (String s : listenerClasses)
-                        cl.addListener((QueryExecutionListener) Class.forName(s).newInstance());
+                        cl.addListener((IQueryExecutionListener) Class.forName(s).newInstance());
                     listener = cl;
                 }
             } catch (Exception e) {

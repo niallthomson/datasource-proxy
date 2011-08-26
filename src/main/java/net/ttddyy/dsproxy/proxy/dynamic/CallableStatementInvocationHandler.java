@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy.dynamic;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 
 import java.lang.reflect.Method;
 import java.sql.CallableStatement;
@@ -22,7 +22,7 @@ public class CallableStatementInvocationHandler extends AbstractStatementInvocat
 	private SortedMap<Object, Object> queryParams = new TreeMap<Object, Object>();
 
 	public CallableStatementInvocationHandler(CallableStatement stmt, String query,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		super(stmt, listener, dataSourceName);
 		
 		this.query = query;

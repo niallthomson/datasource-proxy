@@ -13,7 +13,7 @@ import java.util.Set;
 
 import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.BatchQueryHolder;
 import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
 import net.ttddyy.dsproxy.proxy.MethodUtils;
@@ -28,7 +28,7 @@ import net.ttddyy.dsproxy.proxy.MethodUtils;
 public abstract class AbstractStatementInvocationHandler<E extends Statement>
 		implements IJdbcProxyInvocationHandler {
 	private E wrappedStatement;
-	private QueryExecutionListener listener;
+	private IQueryExecutionListener listener;
 	private String dataSourceName;
 	private List<BatchQueryHolder> batchQueries = new ArrayList<BatchQueryHolder>();
 
@@ -63,7 +63,7 @@ public abstract class AbstractStatementInvocationHandler<E extends Statement>
 			});
 
 	public AbstractStatementInvocationHandler(E stmt,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		this.wrappedStatement = stmt;
 		this.listener = listener;
 		this.dataSourceName = dataSourceName;

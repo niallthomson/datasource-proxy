@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.support.jndi;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 
 import javax.naming.BinaryRefAddr;
 import javax.naming.Context;
@@ -100,7 +100,7 @@ public class JndiProxyDataSourceFactory implements ObjectFactory {
                 originalReference, name, nameCtx, environment);
 
         JndiProxyDataSource pds = new JndiProxyDataSource(parentInfo[1].toString(), parentDataSource);
-        pds.setListener((QueryExecutionListener) parentInfo[2]);
+        pds.setListener((IQueryExecutionListener) parentInfo[2]);
         return pds;
     }
 }

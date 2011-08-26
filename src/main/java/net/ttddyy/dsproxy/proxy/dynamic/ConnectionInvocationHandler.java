@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy.dynamic;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
 import net.ttddyy.dsproxy.proxy.ObjectArrayUtils;
 
@@ -28,13 +28,13 @@ public class ConnectionInvocationHandler implements IJdbcProxyInvocationHandler 
 
 
     private Connection connection;
-    private QueryExecutionListener listener;
+    private IQueryExecutionListener listener;
     private String dataSourceName;
 
 	private IJdbcProxyFactory proxyFactory;
 
     public ConnectionInvocationHandler(
-            Connection connection, QueryExecutionListener listener, String dataSourceName) {
+            Connection connection, IQueryExecutionListener listener, String dataSourceName) {
         this.connection = connection;
         this.listener = listener;
         this.dataSourceName = dataSourceName;

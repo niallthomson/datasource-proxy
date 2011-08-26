@@ -1,6 +1,5 @@
 package net.ttddyy.dsproxy.support.logging;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -12,11 +11,15 @@ import org.apache.commons.logging.LogFactory;
  */
 public class CommonsLogger extends AbstractLogger {
 	private Log log = LogFactory.getLog(CommonsLogger.class);
-    private CommonsLogLevel logLevel = CommonsLogLevel.DEBUG;
+    private CommonsLogLevel logLevel;
 
-    public void setLogLevel(CommonsLogLevel logLevel) {
-        this.logLevel = logLevel;
-    }
+    public CommonsLogger(String logLevel) {
+		this.setLogLevel(logLevel);
+	}
+    
+    public CommonsLogger() {
+    	this.setLogLevel(CommonsLogLevel.DEBUG);
+	}
 
 	@Override
 	public void writeLog(String message) {
@@ -41,12 +44,20 @@ public class CommonsLogger extends AbstractLogger {
 	            break;
 	    }
 	}
+	
+	public void setLogLevel(CommonsLogLevel logLevel) {
+        this.logLevel = logLevel;
+    }
 
 	public void setLogLevel(String level) {
 		final CommonsLogLevel logLevel = CommonsLogLevel.nullSafeValueOf(level);
 		
         if (logLevel != null) {
-            this.logLevel = logLevel;
+            this.setLogLevel(logLevel);
         }
+	}
+	
+	protected void setLog(Log log) {
+		this.log = log;
 	}
 }

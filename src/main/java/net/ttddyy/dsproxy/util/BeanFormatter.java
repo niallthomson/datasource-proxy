@@ -28,7 +28,7 @@ public class BeanFormatter {
 			throw new IllegalArgumentException("Format string cannot be null");
 		}
 		
-		this.matcher = pattern.matcher(formatString);
+		this.setFormat(formatString);
 	}
 
 	public String format(Object bean) throws Exception {
@@ -59,5 +59,9 @@ public class BeanFormatter {
 		field.setAccessible(true);
 		
 		return String.valueOf(field.get(bean));
+	}
+	
+	public void setFormat(String format) {
+		this.matcher = pattern.matcher(format);
 	}
 }

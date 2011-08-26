@@ -2,7 +2,7 @@ package net.ttddyy.dsproxy.proxy;
 
 import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.listener.SimpleQueryExecutionListener;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
@@ -60,7 +60,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query)).thenReturn(100);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
         int result = statment.executeUpdate(query);
 
@@ -76,7 +76,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -96,7 +96,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query, Statement.RETURN_GENERATED_KEYS)).thenReturn(100);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         int result = statment.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
@@ -113,7 +113,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query, Statement.RETURN_GENERATED_KEYS)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -134,7 +134,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query, columnIndexes)).thenReturn(100);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         int result = statment.executeUpdate(query, columnIndexes);
@@ -152,7 +152,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query, columnIndexes)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -174,7 +174,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query, columnNames)).thenReturn(100);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         int result = statment.executeUpdate(query, columnNames);
@@ -192,7 +192,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeUpdate(query, columnNames)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -212,7 +212,7 @@ public class StatementInvocationHandlerMockTest {
 
         Statement stat = mock(Statement.class);
         when(stat.execute(query)).thenReturn(true);
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         boolean result = statment.execute(query);
@@ -228,7 +228,7 @@ public class StatementInvocationHandlerMockTest {
 
         Statement stat = mock(Statement.class);
         when(stat.execute(query)).thenThrow(new SQLException());
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -248,7 +248,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.execute(query, Statement.RETURN_GENERATED_KEYS)).thenReturn(true);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         boolean result = statment.execute(query, Statement.RETURN_GENERATED_KEYS);
@@ -265,7 +265,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.execute(query, Statement.RETURN_GENERATED_KEYS)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -286,7 +286,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.execute(query, columnIndexes)).thenReturn(true);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         boolean result = statment.execute(query, columnIndexes);
@@ -304,7 +304,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.execute(query, columnIndexes)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -325,7 +325,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.execute(query, columnNames)).thenReturn(true);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         boolean result = statment.execute(query, columnNames);
@@ -344,7 +344,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.execute(query, columnNames)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -366,7 +366,7 @@ public class StatementInvocationHandlerMockTest {
         ResultSet rs = mock(ResultSet.class);
         when(stat.executeQuery(query)).thenReturn(rs);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         ResultSet result = statment.executeQuery(query);
@@ -383,7 +383,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeQuery(query)).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         try {
@@ -396,12 +396,12 @@ public class StatementInvocationHandlerMockTest {
         verifyListenerForException(listener, "executeQuery", query, query);
     }
 
-    private Statement getProxyStatement(Statement statement, QueryExecutionListener listener) {
+    private Statement getProxyStatement(Statement statement, IQueryExecutionListener listener) {
         return proxyFactory.createStatement(statement, listener, DS_NAME);
     }
 
     @SuppressWarnings("unchecked")
-    private void verifyListener(QueryExecutionListener listener, String methodName, String query, Object... methodArgs) {
+    private void verifyListener(IQueryExecutionListener listener, String methodName, String query, Object... methodArgs) {
 
         ArgumentCaptor<ExecutionInfo> executionInfoCaptor = ArgumentCaptor.forClass(ExecutionInfo.class);
         ArgumentCaptor<List> queryInfoListCaptor = ArgumentCaptor.forClass(List.class);
@@ -425,7 +425,7 @@ public class StatementInvocationHandlerMockTest {
     }
 
     @SuppressWarnings("unchecked")
-    private void verifyListenerForException(QueryExecutionListener listener, String methodName,
+    private void verifyListenerForException(IQueryExecutionListener listener, String methodName,
                                             String query, Object... methodArgs) {
 
         ArgumentCaptor<ExecutionInfo> executionInfoCaptor = ArgumentCaptor.forClass(ExecutionInfo.class);
@@ -457,7 +457,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         doThrow(new SQLException()).when(stat).addBatch(queryB);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         statment.addBatch(queryA);
@@ -482,7 +482,7 @@ public class StatementInvocationHandlerMockTest {
         ResultSet rs = mock(ResultSet.class);
         when(stat.executeQuery(queryA)).thenReturn(rs);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         // run
@@ -509,7 +509,7 @@ public class StatementInvocationHandlerMockTest {
         Statement stat = mock(Statement.class);
         when(stat.executeBatch()).thenThrow(new SQLException());
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         // run
@@ -541,7 +541,7 @@ public class StatementInvocationHandlerMockTest {
         ResultSet rs = mock(ResultSet.class);
         when(stat.executeQuery(queryA)).thenReturn(rs);
 
-        QueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
+        IQueryExecutionListener listener = spy(new SimpleQueryExecutionListener());
         Statement statment = getProxyStatement(stat, listener);
 
         // run
@@ -562,7 +562,7 @@ public class StatementInvocationHandlerMockTest {
     }
 
     @SuppressWarnings("unchecked")
-    private void verifyListenerForExecuteBatch(QueryExecutionListener listener, String... queries) {
+    private void verifyListenerForExecuteBatch(IQueryExecutionListener listener, String... queries) {
         ArgumentCaptor<ExecutionInfo> executionInfoCaptor = ArgumentCaptor.forClass(ExecutionInfo.class);
         ArgumentCaptor<List> queryInfoListCaptor = ArgumentCaptor.forClass(List.class);
 
@@ -589,7 +589,7 @@ public class StatementInvocationHandlerMockTest {
     }
 
     @SuppressWarnings("unchecked")
-    private void verifyListenerForExecuteBatchForException(QueryExecutionListener listener, String... queries) {
+    private void verifyListenerForExecuteBatchForException(IQueryExecutionListener listener, String... queries) {
         ArgumentCaptor<ExecutionInfo> executionInfoCaptor = ArgumentCaptor.forClass(ExecutionInfo.class);
         ArgumentCaptor<List> queryInfoListCaptor = ArgumentCaptor.forClass(List.class);
 

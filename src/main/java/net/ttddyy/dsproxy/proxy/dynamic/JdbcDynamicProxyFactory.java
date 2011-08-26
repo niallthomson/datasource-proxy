@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy.dynamic;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
 import net.ttddyy.dsproxy.proxy.ProxyJdbcObject;
 
@@ -22,7 +22,7 @@ import java.sql.Statement;
 public class JdbcDynamicProxyFactory implements IJdbcProxyFactory {
 
 	public DataSource createDataSource(DataSource dataSource,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return (DataSource) createProxyInstance(
 				DataSource.class,
 				getDataSourceInvocationHandler(dataSource, listener,
@@ -30,12 +30,12 @@ public class JdbcDynamicProxyFactory implements IJdbcProxyFactory {
 	}
 	
 	public Connection createConnection(Connection connection,
-			QueryExecutionListener listener) {
+			IQueryExecutionListener listener) {
 		return createConnection(connection, listener, "");
 	}
 
 	public Connection createConnection(Connection connection,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return (Connection) createProxyInstance(
 				Connection.class,
 				getConnectionInvocationHandler(connection, listener,
@@ -43,31 +43,31 @@ public class JdbcDynamicProxyFactory implements IJdbcProxyFactory {
 	}
 
 	public Statement createStatement(Statement statement,
-			QueryExecutionListener listener) {
+			IQueryExecutionListener listener) {
 		return createStatement(statement, listener, "");
 	}
 
 	public Statement createStatement(
 			Statement statement,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return (Statement)createProxyInstance(Statement.class, getStatementInvocationHandler(statement, listener, dataSourceName));
 	}
 
 	public PreparedStatement createPreparedStatement(
 			PreparedStatement preparedStatement, String query,
-			QueryExecutionListener listener) {
+			IQueryExecutionListener listener) {
 		return createPreparedStatement(preparedStatement, query, listener, "");
 	}
 
 	public PreparedStatement createPreparedStatement(
 			PreparedStatement preparedStatement, String query,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return (PreparedStatement)createProxyInstance(PreparedStatement.class, getPreparedStatementInvocationHandler(preparedStatement, query, listener, dataSourceName));
 	}
 
 	public CallableStatement createCallableStatement(
 			CallableStatement callableStatement, String query,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return (CallableStatement)createProxyInstance(CallableStatement.class, getCallableStatementInvocationHandler(callableStatement, query, listener, dataSourceName));
 	}
 
@@ -82,14 +82,14 @@ public class JdbcDynamicProxyFactory implements IJdbcProxyFactory {
 	}
 
 	protected IJdbcProxyInvocationHandler getDataSourceInvocationHandler(
-			DataSource dataSource, QueryExecutionListener listener,
+			DataSource dataSource, IQueryExecutionListener listener,
 			String dataSourceName) {
 		return new DataSourceInvocationHandler(dataSource, listener,
 				dataSourceName);
 	}
 
 	protected IJdbcProxyInvocationHandler getConnectionInvocationHandler(
-			Connection connection, QueryExecutionListener listener,
+			Connection connection, IQueryExecutionListener listener,
 			String dataSourceName) {
 		return new ConnectionInvocationHandler(connection, listener,
 				dataSourceName);
@@ -97,21 +97,21 @@ public class JdbcDynamicProxyFactory implements IJdbcProxyFactory {
 	
 	protected IJdbcProxyInvocationHandler getPreparedStatementInvocationHandler(
 			PreparedStatement preparedStatement, String query,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return new PreparedStatementInvocationHandler(preparedStatement, query, listener,
 				dataSourceName);
 	}
 	
 	protected IJdbcProxyInvocationHandler getCallableStatementInvocationHandler(
 			CallableStatement callableStatement, String query,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return new CallableStatementInvocationHandler(callableStatement, query, listener,
 				dataSourceName);
 	}
 	
 	protected IJdbcProxyInvocationHandler getStatementInvocationHandler(
 			Statement statement,
-			QueryExecutionListener listener, String dataSourceName) {
+			IQueryExecutionListener listener, String dataSourceName) {
 		return new StatementInvocationHandler(statement, listener,
 				dataSourceName);
 	}

@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy.dynamic;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 import net.ttddyy.dsproxy.proxy.IJdbcProxyFactory;
 
 import javax.sql.DataSource;
@@ -24,14 +24,14 @@ public class DataSourceInvocationHandler implements IJdbcProxyInvocationHandler 
     );
 
     private DataSource dataSource;
-    private QueryExecutionListener listener;
+    private IQueryExecutionListener listener;
     private String dataSourceName;
     private IJdbcProxyFactory proxyFactory;
 
     public DataSourceInvocationHandler() {
     }
 
-    public DataSourceInvocationHandler(DataSource dataSource, QueryExecutionListener listener, String dataSourceName) {
+    public DataSourceInvocationHandler(DataSource dataSource, IQueryExecutionListener listener, String dataSourceName) {
         this.dataSource = dataSource;
         this.listener = listener;
         this.dataSourceName = dataSourceName;
@@ -82,7 +82,7 @@ public class DataSourceInvocationHandler implements IJdbcProxyInvocationHandler 
         this.dataSource = dataSource;
     }
 
-    public void setListener(QueryExecutionListener listener) {
+    public void setListener(IQueryExecutionListener listener) {
         this.listener = listener;
     }
 

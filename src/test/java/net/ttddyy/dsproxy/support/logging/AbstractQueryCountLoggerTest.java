@@ -2,6 +2,7 @@ package net.ttddyy.dsproxy.support.logging;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import net.ttddyy.dsproxy.QueryCount;
 import net.ttddyy.dsproxy.QueryCountHolder;
 
 import org.mockito.ArgumentCaptor;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -34,12 +37,9 @@ public class AbstractQueryCountLoggerTest {
 	private ILogger logger;
 	
 	@BeforeTest
-	public void setupTest() {
-		firstQueryCount = new QueryCount();
-		firstQueryCount.setSelect(1);
-		
-		secondQueryCount = new QueryCount();
-		secondQueryCount.setSelect(2);
+	public void setupTests() {
+		firstQueryCount = new QueryCount(1, 2, 3, 4, 5, 6, 7, new Long(8));
+		secondQueryCount = new QueryCount(11, 12, 13, 14, 15, 16, 17, new Long(18));
 		
 		dsNames = new ArrayList<String>();
 		dsNames.add("first");
@@ -51,10 +51,13 @@ public class AbstractQueryCountLoggerTest {
 		doCallRealMethod().when(queryCountLogger).writeMessage(any(QueryCountLogMessage.class));
 		doCallRealMethod().when(queryCountLogger).logQueryCount();
 		doCallRealMethod().when(queryCountLogger).setClearQueryCounter(anyBoolean());
+		doCallRealMethod().when(queryCountLogger).getQueryCountHolder();
+		doCallRealMethod().when(queryCountLogger).setLogLevel(anyString());
+		doCallRealMethod().when(queryCountLogger).setFormat(anyString());
 	}
 
 	@BeforeMethod
-	public void completeSetup() {
+	public void setupTest() {
 		queryCountHolder = mock(QueryCountHolder.class);
 		when(queryCountHolder.getDataSourceNamesAsList()).thenReturn(dsNames);
 		when(queryCountHolder.get("first")).thenReturn(firstQueryCount);
@@ -63,11 +66,17 @@ public class AbstractQueryCountLoggerTest {
 		logger = mock(ILogger.class);
 		
 		queryCountLogger.setLogger(logger);
-		queryCountLogger.setQueryCountHolder(queryCountHolder);
+	}
+	
+	@AfterMethod
+	public void teardownTest() {
+		queryCountLogger.setQueryCountHolder(null);
 	}
 	
 	@Test
 	public void testLogQueryCountNoClear() {
+		queryCountLogger.setQueryCountHolder(queryCountHolder);
+		
 		queryCountLogger.setClearQueryCounter(false);
 		queryCountLogger.logQueryCount();
 		
@@ -76,10 +85,42 @@ public class AbstractQueryCountLoggerTest {
 	
 	@Test
 	public void testLogQueryCountWithClear() {
+		queryCountLogger.setQueryCountHolder(queryCountHolder);
+		
 		queryCountLogger.setClearQueryCounter(true);
 		queryCountLogger.logQueryCount();
 		
 		verifyResult(logger, true);
+	}
+	
+	@Test
+	public void testGetQueryCountHolder() {
+		queryCountLogger.setQueryCountHolder(queryCountHolder);
+		
+		QueryCountHolder queryCountHolder = queryCountLogger.getQueryCountHolder();
+		
+		assertTrue(this.queryCountHolder == queryCountHolder);
+	}
+	
+	@Test
+	public void testGetQueryCountHolderDefault() {
+		QueryCountHolder queryCountHolder = queryCountLogger.getQueryCountHolder();
+		
+		assertTrue(QueryCountHolder.getDefaultInstance() == queryCountHolder);
+	}
+	
+	@Test
+	public void testSetLogLevel() {
+		queryCountLogger.setLogLevel("level");
+		
+		verify(logger).setLogLevel("level");
+	}
+	
+	@Test
+	public void testSetFormat() {
+		queryCountLogger.setFormat("format");
+		
+		verify(logger).setFormat("format");
 	}
 	
 	private void verifyResult(ILogger logger, boolean shouldCallClear) {
@@ -88,8 +129,30 @@ public class AbstractQueryCountLoggerTest {
 		verify(logger, times(2)).log(logMessageCaptor.capture());
 		
 		List<QueryCountLogMessage> messages = logMessageCaptor.getAllValues();
-		assertEquals(messages.get(0).getSelect(), 1);
-		assertEquals(messages.get(1).getSelect(), 2);
+		
+		QueryCountLogMessage firstMessage = messages.get(0);
+		assertEquals(firstMessage.getDsName(), "first");
+		assertEquals(firstMessage.getSelect(), 1);
+		assertEquals(firstMessage.getInsert(), 2);
+		assertEquals(firstMessage.getUpdate(), 3);
+		assertEquals(firstMessage.getDelete(), 4);
+		assertEquals(firstMessage.getOther(), 5);
+		assertEquals(firstMessage.getCall(), 6);
+		assertEquals(firstMessage.getFailure(), 7);
+		assertEquals(firstMessage.getElapsedTime(), 8);
+		assertEquals(firstMessage.getTotalNumOfQuery(), 15);
+		
+		QueryCountLogMessage secondMessage = messages.get(1);
+		assertEquals(secondMessage.getDsName(), "second");
+		assertEquals(secondMessage.getSelect(), 11);
+		assertEquals(secondMessage.getInsert(), 12);
+		assertEquals(secondMessage.getUpdate(), 13);
+		assertEquals(secondMessage.getDelete(), 14);
+		assertEquals(secondMessage.getOther(), 15);
+		assertEquals(secondMessage.getCall(), 16);
+		assertEquals(secondMessage.getFailure(), 17);
+		assertEquals(secondMessage.getElapsedTime(), 18);
+		assertEquals(secondMessage.getTotalNumOfQuery(), 65);
 		
 		if(shouldCallClear) {
 			verify(queryCountHolder).clear();

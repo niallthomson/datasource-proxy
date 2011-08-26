@@ -16,6 +16,7 @@ import java.io.IOException;
 public class MetricsTag extends SimpleTagSupport {
     private String dataSource;
     private String metric;
+	private QueryCountHolder queryCountHolder;
 
     @Override
     public void doTag() throws JspException, IOException {
@@ -26,9 +27,9 @@ public class MetricsTag extends SimpleTagSupport {
 
         final QueryCount count;
         if (dataSource == null || "".equals(dataSource)) {
-            count = QueryCountHolder.getDefaultInstance().getGrandTotal();
+            count = this.getQueryCountHolder().getGrandTotal();
         } else {
-            count = QueryCountHolder.getDefaultInstance().get(dataSource);
+            count = this.getQueryCountHolder().get(dataSource);
         }
 
         if (count == null) {
@@ -54,6 +55,8 @@ public class MetricsTag extends SimpleTagSupport {
             sb.append(count.getElapsedTime());
         } else if ("total".equalsIgnoreCase(metric)) {
             sb.append(count.getTotalNumOfQuery());
+        } else {
+        	return;
         }
 
         final JspWriter writer = getJspContext().getOut();
@@ -74,5 +77,17 @@ public class MetricsTag extends SimpleTagSupport {
 
     public void setMetric(String metric) {
         this.metric = metric;
+    }
+    
+    protected void setQueryCountHolder(QueryCountHolder queryCountHolder) {
+    	this.queryCountHolder = queryCountHolder;
+    }
+    
+    private QueryCountHolder getQueryCountHolder() {
+    	if(this.queryCountHolder == null) {
+    		this.queryCountHolder = QueryCountHolder.getDefaultInstance();
+    	}
+    	
+    	return this.queryCountHolder;
     }
 }

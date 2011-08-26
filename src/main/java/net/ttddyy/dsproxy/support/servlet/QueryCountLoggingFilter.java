@@ -27,11 +27,17 @@ import net.ttddyy.dsproxy.support.logging.AbstractQueryCountLogger;
  */
 public class QueryCountLoggingFilter extends AbstractQueryCountLogger implements Filter {
 	private static final String CLEAR_QUERY_COUNTER_PARAM = "clearQueryCounter";
+	private static final String LOG_LEVEL_PARAM = "logLevel";
 
     public void init(FilterConfig filterConfig) throws ServletException {
         final String clearQueryCounterParam = filterConfig.getInitParameter(CLEAR_QUERY_COUNTER_PARAM);
         if (clearQueryCounterParam != null && "false".equalsIgnoreCase(clearQueryCounterParam)) {
             this.setClearQueryCounter(false);
+        }
+        
+        final String logLevelParam = filterConfig.getInitParameter(LOG_LEVEL_PARAM);  
+        if(logLevelParam != null) {
+        	this.setLogLevel(logLevelParam);
         }
     }
 

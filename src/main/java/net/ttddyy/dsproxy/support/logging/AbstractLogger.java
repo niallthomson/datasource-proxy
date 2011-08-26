@@ -15,9 +15,9 @@ public abstract class AbstractLogger implements ILogger {
 
 	public void log(Object message) {
 		try {
-			writeLog(formatter.format(message));
+			this.writeLog(formatter.format(message));
 		} catch (Exception e) {
-			writeLog("Failed to format log message");
+			this.writeLog("Failed to format log message");
 			
 			e.printStackTrace();
 		}

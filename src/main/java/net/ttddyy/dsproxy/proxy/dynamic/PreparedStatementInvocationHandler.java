@@ -1,6 +1,6 @@
 package net.ttddyy.dsproxy.proxy.dynamic;
 
-import net.ttddyy.dsproxy.listener.QueryExecutionListener;
+import net.ttddyy.dsproxy.listener.IQueryExecutionListener;
 
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
@@ -39,7 +39,7 @@ public class PreparedStatementInvocationHandler extends AbstractStatementInvocat
     private SortedMap<Integer, Object> queryParams = new TreeMap<Integer, Object>();
 
     public PreparedStatementInvocationHandler(
-            PreparedStatement ps, String query, QueryExecutionListener listener, String dataSourceName) {
+            PreparedStatement ps, String query, IQueryExecutionListener listener, String dataSourceName) {
         super(ps, listener, dataSourceName);
         this.query = query;
     }

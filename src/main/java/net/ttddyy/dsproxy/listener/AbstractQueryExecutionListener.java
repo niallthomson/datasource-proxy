@@ -12,7 +12,7 @@ import net.ttddyy.dsproxy.QueryInfo;
  * 
  * @author Niall Thomson
  */
-public abstract class AbstractQueryExecutionListener implements QueryExecutionListener {
+public abstract class AbstractQueryExecutionListener implements IQueryExecutionListener {
 	public void beforeQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
 		
 	}
