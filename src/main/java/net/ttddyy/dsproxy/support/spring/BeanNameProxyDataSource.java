@@ -13,9 +13,9 @@ import org.springframework.beans.factory.BeanNameAware;
 public class BeanNameProxyDataSource extends ProxyDataSource implements BeanNameAware {
 
     public void setBeanName(String name) {
-        final String dataSourceName = getDataSourceName();
+        final String dataSourceName = this.getDataSourceName();
         if (dataSourceName == null || "".equals(dataSourceName)) {
-            setDataSourceName(name);
+            this.setDataSourceName(name);
         }
     }
 }

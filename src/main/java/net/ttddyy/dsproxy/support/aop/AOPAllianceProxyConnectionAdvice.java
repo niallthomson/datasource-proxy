@@ -24,7 +24,7 @@ public class AOPAllianceProxyConnectionAdvice implements MethodInterceptor {
             return retVal;
         }
 
-        return proxyFactory.createConnection((Connection) retVal, null);
+        return this.proxyFactory.createConnection((Connection) retVal, null);
     }
 
 	public void setProxyFactory(IJdbcProxyFactory proxyFactory) {
@@ -32,7 +32,7 @@ public class AOPAllianceProxyConnectionAdvice implements MethodInterceptor {
 	}
 
 	public IJdbcProxyFactory getProxyFactory() {
-		return proxyFactory;
+		return this.proxyFactory;
 	}
 
 }

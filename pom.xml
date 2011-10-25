@@ -18,6 +18,13 @@
   <properties>
     <spring.version>2.5.6</spring.version>
   </properties>
+  
+  <repositories>
+      <repository>
+        <id>Forumarchivebuilder</id>
+        <url>http://forumarchivebuilder.googlecode.com/svn/repository</url>
+      </repository>
+    </repositories>
 
   <build>
     <plugins>
